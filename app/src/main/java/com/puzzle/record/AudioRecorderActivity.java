@@ -57,11 +57,39 @@ public class AudioRecorderActivity extends BaseActivity implements View.OnClickL
         startActivity(intent);
     }
 
+    @SuppressLint("SetTextI18n")
     private void onRecord(){
-
+        if (!mRecording.get()) {
+            if (checkPermission()) {
+                // startRecording();
+                mRecording.set(true);
+                mBinding.audioRecorder.setText("StopAudioRecorder");
+                mBinding.audioPlayer.setEnabled(false);
+                mBinding.switchMediaRecorder.setEnabled(false);
+            }
+        } else {
+            // stopRecording();
+            mRecording.set(false);
+            mBinding.audioRecorder.setText("StartAudioRecorder");
+            mBinding.audioPlayer.setEnabled(true);
+            mBinding.switchMediaRecorder.setEnabled(true);
+        }
     }
 
+    @SuppressLint("SetTextI18n")
     private void onPlay(){
-
+        if (!mPlaying.get()) {
+            // startPlaying();
+            mPlaying.set(true);
+            mBinding.audioRecorder.setEnabled(false);
+            mBinding.switchMediaRecorder.setEnabled(false);
+            mBinding.audioPlayer.setText("StopAudioPlayer");
+        } else {
+            // stopPlaying();
+            mPlaying.set(false);
+            mBinding.audioRecorder.setEnabled(true);
+            mBinding.switchMediaRecorder.setEnabled(true);
+            mBinding.audioPlayer.setText("StartMediaPlayer");
+        }
     }
 }
