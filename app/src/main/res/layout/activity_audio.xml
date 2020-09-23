@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light"
+    android:paddingTop="30dp">
+
+    <Button
+        android:id="@+id/switchMediaRecorder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SwitchMediaRecorder"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/audioRecorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/switchMediaRecorder"
+        android:layout_marginBottom="-80dp"
+        android:text="StartAudioRecorder"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/audioPlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/switchMediaRecorder"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginRight="-2dp"
+        android:layout_marginBottom="-80dp"
+        android:text="StartAudioPlayer"
+        android:textAllCaps="false" />
+
+</RelativeLayout>
