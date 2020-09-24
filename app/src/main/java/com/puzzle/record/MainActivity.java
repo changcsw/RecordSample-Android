@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import androidx.core.app.ActivityCompat;
-
 import com.puzzle.record.databinding.ActivityMainBinding;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private MediaRecorder recorder = null;
@@ -25,6 +24,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         initView();
+        fileName = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/audiorecordtest.3gp";
     }
 
     @SuppressLint("SetTextI18n")
