@@ -1,4 +1,4 @@
-package com.puzzle.record;
+package com.puzzle.record.utils;
 
 import android.util.Log;
 
@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 /**
  * Created by ZhouMeng on 2018/8/31.

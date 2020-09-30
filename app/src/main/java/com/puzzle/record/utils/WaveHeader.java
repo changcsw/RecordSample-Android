@@ -1,4 +1,4 @@
-package com.puzzle.record;
+package com.puzzle.record.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

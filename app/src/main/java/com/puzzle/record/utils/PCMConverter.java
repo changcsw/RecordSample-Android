@@ -1,4 +1,4 @@
-package com.puzzle.record;
+package com.puzzle.record.utils;
 
 public class PCMConverter {
     /**
