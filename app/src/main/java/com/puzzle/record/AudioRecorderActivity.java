@@ -28,6 +28,7 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 
 
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class AudioRecorderActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int SAMPLING_RATE_IN_HZ = 44100;
@@ -50,6 +51,12 @@ public class AudioRecorderActivity extends BaseActivity implements View.OnClickL
     private static final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLING_RATE_IN_HZ,
             CHANNEL_CONFIG, AUDIO_FORMAT) * BUFFER_SIZE_FACTOR;
 
+    AudioAttributes audioAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
+
+    AudioFormat audioFormat = new AudioFormat.Builder().setSampleRate(SAMPLING_RATE_IN_HZ)
+            .setEncoding(AUDIO_FORMAT).setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build();
+
     private AudioRecord recorder = null;
     private AudioTrack audioTrack = null;
     private Thread recordingThread = null;
@@ -65,7 +72,8 @@ public class AudioRecorderActivity extends BaseActivity implements View.OnClickL
         setContentView(mBinding.getRoot());
         initView();
         recordFileName = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/recording.pcm";
-        initAudio();
+        fileName = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/recording.mp3";
+//        initAudio();
     }
 
     @SuppressLint("SetTextI18n")
@@ -82,19 +90,19 @@ public class AudioRecorderActivity extends BaseActivity implements View.OnClickL
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void  initAudio() {
         // 获得缓冲区字节大小
-        recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, SAMPLING_RATE_IN_HZ,
-                CHANNEL_CONFIG, AUDIO_FORMAT, BUFFER_SIZE);
 //         bufferSizeInBytes = AudioRecord.getMinBufferSize(AUDIO_SAMPLE_RATE, AUDIO_CHANNEL, AUDIO_ENCODING);
 //        audioRecord = new AudioRecord(AUDIO_INPUT, AUDIO_SAMPLE_RATE, AUDIO_CHANNEL, AUDIO_ENCODING, bufferSizeInBytes);
 //        this.fileName = fileName;
 //        status = AudioStatus.STATUS_READY;
 
-        AudioAttributes audioAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
+    }
 
-        AudioFormat audioFormat = new AudioFormat.Builder().setSampleRate(SAMPLING_RATE_IN_HZ)
-                .setEncoding(AUDIO_FORMAT).setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build();
+    private void initAudioRecord(){
+        recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, SAMPLING_RATE_IN_HZ,
+                CHANNEL_CONFIG, AUDIO_FORMAT, BUFFER_SIZE);
+    }
 
+    private void initAudioTrack() {
         audioTrack = new AudioTrack(audioAttributes, audioFormat, BUFFER_SIZE,
                 AudioTrack.MODE_STREAM, AudioManager.AUDIO_SESSION_ID_GENERATE);
     }
@@ -154,11 +162,12 @@ public class AudioRecorderActivity extends BaseActivity implements View.OnClickL
             mPlaying.set(false);
             mBinding.audioRecorder.setEnabled(true);
             mBinding.switchMediaRecorder.setEnabled(true);
-            mBinding.audioPlayer.setText("StartMediaPlayer");
+            mBinding.audioPlayer.setText("StartAudioPlayer");
         }
     }
 
     private void startRecording() {
+        initAudioRecord();
         recorder.startRecording();
         mRecording.set(true);
 
@@ -231,6 +240,7 @@ public class AudioRecorderActivity extends BaseActivity implements View.OnClickL
      * @param filePath 文件的绝对路径
      */
     public void play(final String filePath) {
+        initAudioTrack();
         try {
             audioTrack.play();
         } catch (Exception e) {
