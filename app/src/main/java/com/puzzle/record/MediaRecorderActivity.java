@@ -9,19 +9,20 @@ import android.util.Log;
 import android.view.View;
 
 import com.puzzle.record.databinding.ActivityMainBinding;
+import com.puzzle.record.databinding.ActivityMediaBinding;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MediaRecorderActivity extends BaseActivity implements View.OnClickListener {
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
 
-    private ActivityMainBinding mBinding;
+    private ActivityMediaBinding mBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        mBinding = ActivityMediaBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         initView();
         fileName = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/audiorecordtest.3gp";
@@ -31,7 +32,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initView() {
         mBinding.mediaRecorder.setText("StartMediaRecorder");
         mBinding.mediaPlayer.setText("StartMediaPlayer");
-        mBinding.switchAudioRecorder.setText("SwitchAudioRecorder");
+        mBinding.switchAudioRecorder.setText("SwitchMainActivity");
         mBinding.mediaPlayer.setEnabled(false);
 
         mBinding.mediaRecorder.setOnClickListener(this);
@@ -52,7 +53,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.switchAudioRecorder:
                 mRecording.set(false);
                 mPlaying.set(false);
-                Intent intent = new Intent(this, AudioRecorderActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
         }

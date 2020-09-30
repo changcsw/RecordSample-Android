@@ -11,11 +11,11 @@
         android:layout_marginTop="30dp">
 
         <Button
-            android:id="@+id/mediaRecorder"
+            android:id="@+id/recorder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="StartMediaRecorder"
+            android:text="StartRecorder"
             android:textAllCaps="false" />
 
         <View
@@ -24,19 +24,26 @@
             android:layout_weight="0.1" />
 
         <Button
-            android:id="@+id/mediaPlayer"
+            android:id="@+id/player"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="StartMediaPlayer"
+            android:text="StartPlayer"
             android:textAllCaps="false" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/switchMediaRecorder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="SwitchMediaRecorder"
+        android:textAllCaps="false" />
+    <Button
         android:id="@+id/switchAudioRecorder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="SwitchAudioRecorder"
         android:textAllCaps="false" />
 

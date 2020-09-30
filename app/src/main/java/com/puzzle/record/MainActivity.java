@@ -29,13 +29,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     private void initView() {
-        mBinding.mediaRecorder.setText("StartMediaRecorder");
-        mBinding.mediaPlayer.setText("StartMediaPlayer");
+        mBinding.recorder.setText("StartRecorder");
+        mBinding.player.setText("StartPlayer");
+        mBinding.switchMediaRecorder.setText("SwitchMediaRecorder");
         mBinding.switchAudioRecorder.setText("SwitchAudioRecorder");
-        mBinding.mediaPlayer.setEnabled(false);
+        mBinding.player.setEnabled(false);
 
-        mBinding.mediaRecorder.setOnClickListener(this);
-        mBinding.mediaPlayer.setOnClickListener(this);
+        mBinding.recorder.setOnClickListener(this);
+        mBinding.player.setOnClickListener(this);
+        mBinding.switchMediaRecorder.setOnClickListener(this);
         mBinding.switchAudioRecorder.setOnClickListener(this);
     }
 
@@ -43,17 +45,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case  R.id.mediaRecorder:
+            case  R.id.recorder:
                 onRecord();
                 break;
-            case R.id.mediaPlayer:
+            case R.id.player:
                 onPlay();
+                break;
+            case R.id.switchMediaRecorder:
+                mRecording.set(false);
+                mPlaying.set(false);
+                startActivity(new Intent(this, MediaRecorderActivity.class));
                 break;
             case R.id.switchAudioRecorder:
                 mRecording.set(false);
                 mPlaying.set(false);
-                Intent intent = new Intent(this, AudioRecorderActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, AudioRecorderActivity.class));
                 break;
         }
      }
@@ -64,15 +70,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
              if (checkPermission()) {
                  startRecording();
                  mRecording.set(true);
-                 mBinding.mediaRecorder.setText("StopMediaRecorder");
-                 mBinding.mediaPlayer.setEnabled(false);
+                 mBinding.recorder.setText("StopRecorder");
+                 mBinding.player.setEnabled(false);
+                 mBinding.switchMediaRecorder.setEnabled(false);
                  mBinding.switchAudioRecorder.setEnabled(false);
              }
          } else {
              stopRecording();
              mRecording.set(false);
-             mBinding.mediaRecorder.setText("StartMediaRecorder");
-             mBinding.mediaPlayer.setEnabled(true);
+             mBinding.recorder.setText("StartRecorder");
+             mBinding.player.setEnabled(true);
+             mBinding.switchMediaRecorder.setEnabled(true);
              mBinding.switchAudioRecorder.setEnabled(true);
          }
      }
@@ -82,15 +90,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (!mPlaying.get()) {
             startPlaying();
             mPlaying.set(true);
-            mBinding.mediaRecorder.setEnabled(false);
+            mBinding.recorder.setEnabled(false);
+            mBinding.switchMediaRecorder.setEnabled(false);
             mBinding.switchAudioRecorder.setEnabled(false);
-            mBinding.mediaPlayer.setText("StopMediaPlayer");
+            mBinding.player.setText("StopPlayer");
         } else {
             stopPlaying();
             mPlaying.set(false);
-            mBinding.mediaRecorder.setEnabled(true);
+            mBinding.recorder.setEnabled(true);
+            mBinding.switchMediaRecorder.setEnabled(true);
             mBinding.switchAudioRecorder.setEnabled(true);
-            mBinding.mediaPlayer.setText("StartMediaPlayer");
+            mBinding.player.setText("StartPlayer");
         }
      }
 

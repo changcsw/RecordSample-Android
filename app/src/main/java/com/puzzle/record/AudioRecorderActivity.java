@@ -69,7 +69,7 @@ public class AudioRecorderActivity extends BaseActivity implements View.OnClickL
 
     @SuppressLint("SetTextI18n")
     private void initView() {
-        mBinding.switchMediaRecorder.setText("SwitchMediaRecorder");
+        mBinding.switchMediaRecorder.setText("SwitchMainActivity");
         mBinding.audioRecorder.setText("StartAudioRecorder");
         mBinding.audioPlayer.setText("StartAudioPlayer");
 

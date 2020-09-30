@@ -22,6 +22,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MediaRecorderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".AudioRecorderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop" />
