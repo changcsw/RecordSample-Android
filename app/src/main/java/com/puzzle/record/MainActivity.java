@@ -2,22 +2,17 @@ package com.puzzle.record;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.puzzle.record.databinding.ActivityMainBinding;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    private MediaRecorder recorder = null;
-    private MediaPlayer player = null;
-
     private ActivityMainBinding mBinding;
+
+    private String mFilePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +20,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(mBinding.getRoot());
         initView();
         fileName = Objects.requireNonNull(getExternalCacheDir()).getAbsolutePath() + "/audiorecordtest.3gp";
+        AudioManager.getInstance().init(this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -104,64 +100,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
      }
 
-     MediaPlayer.OnCompletionListener onCompletionListener = new MediaPlayer.OnCompletionListener() {
-         @Override
-         public void onCompletion(MediaPlayer mp) {
-             onPlay();
-         }
-     };
-
-    private void startPlaying() {
-        player = new MediaPlayer();
-        try {
-            player.setDataSource(fileName);
-            player.setOnCompletionListener(onCompletionListener);
-            player.prepare();
-            player.start();
-        } catch (IOException e) {
-            Log.e(TAG, "prepare() failed");
-        }
-    }
-
-    private void stopPlaying() {
-        player.release();
-        player = null;
-    }
-
     private void startRecording() {
-        recorder = new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setOutputFile(fileName);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-        try {
-            recorder.prepare();
-        } catch (IOException e) {
-            Log.e(TAG, "prepare() failed");
-        }
-
-        recorder.start();
+        AudioManager.getInstance().startRecord(filePath -> mFilePath = filePath);
     }
 
     private void stopRecording() {
-        recorder.stop();
-        recorder.release();
-        recorder = null;
+        AudioManager.getInstance().stopRecord();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (recorder != null) {
-            recorder.release();
-            recorder = null;
-        }
+    private void startPlaying() {
+        AudioManager.getInstance().startPlay(mFilePath);
+    }
 
-        if (player != null) {
-            player.release();
-            player = null;
-        }
+    private void stopPlaying() {
+        AudioManager.getInstance().stopPlay();
     }
 
 }
